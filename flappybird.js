@@ -120,7 +120,7 @@ function update() {
     context.fillText(score, 5, 45);
 
     if (gameOver) {
-        context.fillText("GAME OVER", 5, 90);
+        context.fillText("DO BETTER.", 5, 90);
     }
 }
 
