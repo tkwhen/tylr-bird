@@ -37,6 +37,11 @@ let gravity = 0.4;
 let gameOver = false;
 let score = 0;
 
+//sounds
+let wingSound;
+let hitSound;
+let pointSound;
+
 window.onload = function() {
     board = document.getElementById("board");
     board.height = boardHeight;
@@ -59,6 +64,10 @@ window.onload = function() {
 
     bottomPipeImg = new Image();
     bottomPipeImg.src = "./bottompipe.png";
+
+    wingSound = new Audio('./wing.ogg')
+    hitSound = new Audio('./hit.ogg')
+    pointSound = new Audio('./point.ogg')
 
     requestAnimationFrame(update);
     setInterval(placePipes, 1500); //every 1.5 seconds
@@ -91,9 +100,11 @@ function update() {
         if (!pipe.passed && bird.x > pipe.x + pipe.width) {
             score += 0.5; //0.5 because there are 2 pipes! so 0.5*2 = 1, 1 for each set of pipes
             pipe.passed = true;
+            pointSound.play();
         }
 
         if (detectCollision(bird, pipe)) {
+            hitSound.play();
             gameOver = true;
         }
     }
@@ -148,6 +159,8 @@ function placePipes() {
 function moveBird(e) {
     if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
         //jump
+        wingSound.play();
+
         velocityY = -6;
 
         //reset game
